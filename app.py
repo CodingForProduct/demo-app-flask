@@ -1,7 +1,7 @@
 """This module runs the Flask app"""
 
 # libraries that this app needs
-from flask import Flask
+from flask import Flask, render_template
 
 # initialize app
 # __name__ helps determine root path
@@ -13,7 +13,8 @@ app.debug = True
 @app.route("/")
 def home():
     """display root route"""
-    return "hi"
+    return render_template("home.html")
+
 
 # only start web server if app.py is called directly;
 # when file is called directly, __name__  is "__main__"
