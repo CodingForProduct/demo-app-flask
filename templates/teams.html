@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-  </head>
-  <body>
-    <h1>Teams</h1>
-    <ul>
-      {% for team in teams %}
-        <li>{{team.name}}
-          <ul>
-            {% for user in team.users %}
-            <li><a href="/users/{{user.id}}">{{user.name}}</a></li>
-            {% endfor %}
-          </ul>
-        </li>
-      {% endfor %}
-    </ul>
-  </body>
-</html>
+{% extends 'layout.html' %}
+{% block body %}
+
+<h1>Teams</h1>
+<ul>
+  {% for team in teams %}
+    <li>{{team.name}}
+      <ul>
+        {% for user in team.users %}
+        <li><a href="/users/{{user.id}}">{{user.name}}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}
