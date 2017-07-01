@@ -5,6 +5,7 @@
     <link rel="stylesheet" type="" href="{{ url_for('static', filename='styles/style.css') }}">
   </head>
   <body>
+    {% include 'partials/_nav.html' %}
     <div class="container">{% block body %}{% endblock %}</div>
 
     <script src="{{ url_for('static', filename='scripts/jquery-3.2.1.slim.min.js') }}"></script>
