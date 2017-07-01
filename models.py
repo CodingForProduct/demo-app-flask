@@ -42,4 +42,4 @@ class User(db.Model):
 
     @classmethod
     def find_one(cls, user_id):
-        return [user for user in data.users() if user['id'] == user_id][0]
+        return User.query.filter_by(id=user_id).first()
