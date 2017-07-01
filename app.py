@@ -7,6 +7,9 @@ from flask import Flask
 # __name__ helps determine root path
 app = Flask(__name__)
 
+# turn on debug to automatically restart app when changes are made
+app.debug = True
+
 @app.route("/")
 def home():
     """display root route"""
