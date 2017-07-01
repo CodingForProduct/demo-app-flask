@@ -24,6 +24,11 @@ def users():
     """display list of users"""
     return render_template("users.html", users=WORKSHOP_USERS)
 
+@app.route("/users/<id>")
+def user(id):
+    """display one user"""
+    return id
+
 # only start web server if app.py is called directly;
 # when file is called directly, __name__  is "__main__"
 if __name__ == "__main__":
