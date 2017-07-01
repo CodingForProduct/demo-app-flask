@@ -18,6 +18,8 @@ def home():
 
 # array of users
 WORKSHOP_USERS = data.users()
+# array of teams
+WORKSHOP_TEAMS = data.teams()
 
 @app.route("/users")
 def users():
@@ -30,6 +32,12 @@ def user(user_id):
     target_user = [user for user in WORKSHOP_USERS if user['id'] == user_id]
 
     return render_template('user.html', user=target_user[0])
+
+@app.route("/teams")
+def teams():
+    """display list of teams"""
+    return render_template("teams.html", teams=WORKSHOP_TEAMS)
+
 
 # only start web server if app.py is called directly;
 # when file is called directly, __name__  is "__main__"
