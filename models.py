@@ -1,6 +1,12 @@
 import data.app_data as data
+from app import db
 
-class Team():
+class Team(db.Model):
+    # class properites are used to generate table fields
+    __tablename__ = 'teams'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
     @classmethod
     def find_all_with_users(cls):
         def get_team_members(team):
@@ -14,7 +20,13 @@ class Team():
         teams_with_users = list(map(get_team_members, data.teams()))
         return teams_with_users
 
-class User():
+class User(db.Model):
+    # class properites are used to generate table fields
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    team_id = db.Column(db.Integer, db.ForeignKey('teams.id'))
+
     @classmethod
     def find_all(cls):
         return data.users()
