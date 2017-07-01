@@ -7,8 +7,8 @@ from flask import Flask
 # __name__ helps determine root path
 app = Flask(__name__)
 
-# turn on debug to automatically restart app when changes are made
-app.debug = True
+# load app settings
+app.config.from_pyfile('settings.py')
 
 # routes
 from routes import *
