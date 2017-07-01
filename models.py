@@ -38,7 +38,7 @@ class User(db.Model):
 
     @classmethod
     def find_all(cls):
-        return data.users()
+        return User.query.all()
 
     @classmethod
     def find_one(cls, user_id):
