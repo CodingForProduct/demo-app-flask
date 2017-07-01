@@ -7,6 +7,10 @@ class Team(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
 
+    # class constructor
+    def __init__(self, name):
+        self.name = name
+
     @classmethod
     def find_all_with_users(cls):
         def get_team_members(team):
@@ -26,6 +30,11 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     team_id = db.Column(db.Integer, db.ForeignKey('teams.id'))
+
+    # class constructor
+    def __init__(self, name, team_id):
+        self.name = name
+        self.team_id = team_id
 
     @classmethod
     def find_all(cls):
