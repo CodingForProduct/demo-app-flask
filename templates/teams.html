@@ -6,7 +6,7 @@
   {% for team in teams %}
     <li>{{team.name}}
       <ul>
-        {% for user in team.users %}
+        {% for user in team.users.all() %}
         <li><a href="/users/{{user.id}}">{{user.name}}</a></li>
         {% endfor %}
       </ul>

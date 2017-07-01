@@ -1,4 +1,3 @@
-import data.app_data as data
 from app import db
 from sqlalchemy.sql import text
 
@@ -7,6 +6,7 @@ class Team(db.Model):
     __tablename__ = 'teams'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    users = db.relationship('User', backref='team', lazy='dynamic')
 
     # class constructor
     def __init__(self, name):
@@ -14,20 +14,7 @@ class Team(db.Model):
 
     @classmethod
     def find_all(cls):
-        command = "SELECT * FROM teams"
-        teams =  db.engine.execute(command).fetchall()
-
-        command = "SELECT * FROM users"
-        users =  db.engine.execute(command).fetchall()
-
-        def get_team_members(team):
-            # find users whose team_id matches the given team
-            team_members = [user for user in users if user['team_id'] == team['id']]
-
-            # add users to team
-            return {'name': team['name'], 'id': team['id'], 'users': team_members}
-
-        return [get_team_members(team) for team in teams]
+        return Team.query.all()
 
 class User(db.Model):
     # class properites are used to generate table fields
@@ -43,10 +30,8 @@ class User(db.Model):
 
     @classmethod
     def find_all(cls):
-        command = "SELECT * FROM users"
-        return db.engine.execute(command).fetchall()
+        return User.query.all()
 
     @classmethod
     def find_one(cls, user_id):
-        command = text('SELECT * FROM users WHERE id = :id')
-        return  db.engine.execute(command, id = user_id ).fetchone()
+        return User.query.filter_by(id=user_id).first()
