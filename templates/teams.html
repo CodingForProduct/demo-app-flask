@@ -4,10 +4,15 @@
   </head>
   <body>
     <h1>Teams</h1>
-    {{ teams }}
     <ul>
       {% for team in teams %}
-        <li>{{team.name}}</li>
+        <li>{{team.name}}
+          <ul>
+            {% for user in team.users %}
+            <li><a href="/users/{{user.id}}">{{user.name}}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
       {% endfor %}
     </ul>
   </body>
