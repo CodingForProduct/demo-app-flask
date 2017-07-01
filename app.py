@@ -2,6 +2,7 @@
 
 # libraries that this app needs
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 
 # initialize app
 # __name__ helps determine root path
@@ -9,6 +10,10 @@ app = Flask(__name__)
 
 # load app settings
 app.config.from_pyfile('settings.py')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# connect to database
+db = SQLAlchemy(app)
 
 # routes
 from routes import *
