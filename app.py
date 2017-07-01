@@ -2,6 +2,7 @@
 
 # libraries that this app needs
 from flask import Flask, render_template
+import data.app_data as data
 
 # initialize app
 # __name__ helps determine root path
@@ -15,6 +16,13 @@ def home():
     """display root route"""
     return render_template("home.html")
 
+# array of users
+WORKSHOP_USERS = data.users()
+
+@app.route("/users")
+def users():
+    """display list of users"""
+    return render_template("users.html", users=WORKSHOP_USERS)
 
 # only start web server if app.py is called directly;
 # when file is called directly, __name__  is "__main__"
