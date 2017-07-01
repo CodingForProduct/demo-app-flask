@@ -29,7 +29,7 @@ def user(user_id):
     """display one user"""
     target_user = [user for user in WORKSHOP_USERS if user['id'] == user_id]
 
-    return str(target_user)
+    return render_template('user.html', user=target_user[0])
 
 # only start web server if app.py is called directly;
 # when file is called directly, __name__  is "__main__"
