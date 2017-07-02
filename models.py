@@ -1,5 +1,6 @@
 import data.app_data as data
 from app import db
+from sqlalchemy.sql import text
 
 class Team(db.Model):
     # class properites are used to generate table fields
@@ -13,8 +14,11 @@ class Team(db.Model):
 
     @classmethod
     def find_all(cls):
-        teams = data.teams()
-        users = data.users()
+        command = "SELECT * FROM teams"
+        teams =  db.engine.execute(command).fetchall()
+
+        command = "SELECT * FROM users"
+        users =  db.engine.execute(command).fetchall()
 
         def get_team_members(team):
             # find users whose team_id matches the given team
@@ -39,8 +43,10 @@ class User(db.Model):
 
     @classmethod
     def find_all(cls):
-        return data.users()
+        command = "SELECT * FROM users"
+        return db.engine.execute(command).fetchall()
 
     @classmethod
     def find_one(cls, user_id):
-        return [user for user in data.users() if user['id'] == user_id][0]
+        command = text('SELECT * FROM users WHERE id = :id')
+        return  db.engine.execute(command, id = user_id ).fetchone()
