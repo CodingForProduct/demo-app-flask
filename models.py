@@ -1,5 +1,6 @@
 import data.app_data as data
 from app import db
+from sqlalchemy.sql import text
 
 class Team(db.Model):
     # class properites are used to generate table fields
@@ -12,16 +13,22 @@ class Team(db.Model):
         self.name = name
 
     @classmethod
-    def find_all_with_users(cls):
+    def find_all(cls):
+        command = "SELECT * FROM teams"
+        teams =  db.engine.execute(command).fetchall()
+
+        command = "SELECT * FROM users"
+        users =  db.engine.execute(command).fetchall()
+
+        # print(teams[0].id)
         def get_team_members(team):
             # find users whose team_id matches the given team
-            team_members = filter(lambda user: user['team_id'] == team['id'], data.users())
-            # add users to team
-            team['users'] = list(team_members)
-            return team
+            team_members = [user for user in users if user.team_id == team.id]
 
-        # add team members to every team
-        teams_with_users = list(map(get_team_members, data.teams()))
+            # add users to team
+            return {'name': team.name, 'id': team.id, 'users': team_members}
+
+        teams_with_users = [get_team_members(team) for team in teams]
         return teams_with_users
 
 class User(db.Model):
@@ -38,8 +45,10 @@ class User(db.Model):
 
     @classmethod
     def find_all(cls):
-        return data.users()
+        command = "SELECT * FROM users"
+        return db.engine.execute(command).fetchall()
 
     @classmethod
     def find_one(cls, user_id):
-        return [user for user in data.users() if user['id'] == user_id][0]
+        command = text('SELECT * FROM users WHERE id = :id')
+        return  db.engine.execute(command, id = user_id ).fetchone()

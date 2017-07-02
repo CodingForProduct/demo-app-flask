@@ -20,12 +20,10 @@ def user(user_id):
     """display one user"""
     # return all users whose id matches url user_id
     target_user = User.find_one(user_id)
-
     return render_template('user.html', user=target_user)
 
 @app.route("/teams")
 def teams():
     """display list of teams"""
-
-    all_teams = Team.find_all_with_users()
+    all_teams = Team.find_all()
     return render_template("teams.html", teams=all_teams)
