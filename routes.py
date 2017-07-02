@@ -20,6 +20,7 @@ def user(user_id):
     """display one user"""
     # return all users whose id matches url user_id
     target_user = User.find_one(user_id)
+    print('-00-0-', target_user[0])
 
     return render_template('user.html', user=target_user)
 
