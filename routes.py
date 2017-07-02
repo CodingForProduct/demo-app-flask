@@ -27,5 +27,5 @@ def user(user_id):
 def teams():
     """display list of teams"""
 
-    all_teams = Team.find_all_with_users()
+    all_teams = Team.find_all()
     return render_template("teams.html", teams=all_teams)

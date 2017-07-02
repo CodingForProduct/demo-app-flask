@@ -1,4 +1,3 @@
-import data.app_data as data
 from app import db
 
 class Team(db.Model):
@@ -6,23 +5,15 @@ class Team(db.Model):
     __tablename__ = 'teams'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    users = db.relationship('User', backref='team', lazy='dynamic')
 
     # class constructor
     def __init__(self, name):
         self.name = name
 
     @classmethod
-    def find_all_with_users(cls):
-        def get_team_members(team):
-            # find users whose team_id matches the given team
-            team_members = filter(lambda user: user['team_id'] == team['id'], data.users())
-            # add users to team
-            team['users'] = list(team_members)
-            return team
-
-        # add team members to every team
-        teams_with_users = list(map(get_team_members, data.teams()))
-        return teams_with_users
+    def find_all(cls):
+        return Team.query.all()
 
 class User(db.Model):
     # class properites are used to generate table fields
