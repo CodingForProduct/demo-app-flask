@@ -1,7 +1,7 @@
 """This module contains all the routes"""
 
-from flask import render_template
-from app import app
+from flask import render_template, request,redirect,url_for
+from app import app, db
 from models import Team, User
 
 @app.route("/")
@@ -27,3 +27,28 @@ def teams():
     """display list of teams"""
     all_teams = Team.find_all()
     return render_template("teams.html", teams=all_teams)
+
+
+def isValid(formData):
+    if (formData['name'].strip() != ''):
+        return True
+    else:
+        return False
+
+@app.route('/teams', methods=['POST'])
+def create_team():
+    name = request.form['name']
+    if isValid(request.form):
+        team = Team(name)
+        # save team to database
+        db.session.add(team)
+        db.session.commit()
+        # redirect to home page
+        return redirect(url_for('teams'))
+    else:
+        return redirect(url_for('new_team'))
+
+@app.route('/teams/new')
+def new_team():
+  return render_template("teamsNew.html")
+
