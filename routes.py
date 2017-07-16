@@ -56,3 +56,10 @@ def new_team():
 def show_team(team_id):
     target_team = Team.query.filter_by(id=team_id).first()
     return render_template('team.html', team=target_team)
+
+@app.route("/teams/<int:team_id>/delete", methods=['POST'])
+def delete_team(team_id):
+    team = Team.query.filter_by(id=team_id).first()
+    db.session.delete(team)
+    db.session.commit()
+    return redirect(url_for('teams'))
