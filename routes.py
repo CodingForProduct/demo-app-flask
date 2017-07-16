@@ -50,5 +50,9 @@ def create_team():
 
 @app.route('/teams/new')
 def new_team():
-  return render_template("teamsNew.html")
+    return render_template("teamsNew.html")
 
+@app.route("/teams/<int:team_id>")
+def show_team(team_id):
+    target_team = Team.query.filter_by(id=team_id).first()
+    return render_template('team.html', team=target_team)
