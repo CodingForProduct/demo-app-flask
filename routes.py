@@ -63,3 +63,18 @@ def delete_team(team_id):
     db.session.delete(team)
     db.session.commit()
     return redirect(url_for('teams'))
+
+@app.route("/teams/<int:team_id>/edit")
+def show_edit_team(team_id):
+    team = Team.query.filter_by(id=team_id).first()
+    return render_template('teamsEdit.html', team=team)
+
+
+@app.route("/teams/<int:team_id>/edit", methods=['POST'])
+def edit_team(team_id):
+    name = request.form['name']
+
+    team = Team.query.filter_by(id=team_id).first()
+    setattr(team, 'name', name)
+    db.session.commit()
+    return redirect(url_for('show_team', team_id=team_id))

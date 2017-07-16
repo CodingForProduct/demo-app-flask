@@ -5,6 +5,8 @@
 
 <p>{{team.name}}: {{team.id}}</p>
 
+<a href="/teams/{{ team.id }}/edit" class="btn btn-primary">Edit</a>
+
 <form action="/teams/{{team.id}}/delete" method="post">
   <input type="submit" value="Delete" class="btn btn-primary">
 </form>
